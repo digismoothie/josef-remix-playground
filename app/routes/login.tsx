@@ -21,13 +21,10 @@ export async function loader({context,  request }) {
 }
 
 function validateCredentials(username: string, password: string) {
-    if (username==="josef") {
-        return 1
+    if (!password) {
+        return
     }
-
-    if (username === "test") {
-        return 2
-    }
+    return username
 }
 
 export async function action({ context,request }) {
@@ -55,6 +52,7 @@ export async function action({ context,request }) {
     }
 
     session.set("userId", userId);
+    session.set("loginTime", new Date().toISOString());
 
     // Login succeeded, send them to the home page.
     return redirect("/", {
@@ -65,7 +63,7 @@ export async function action({ context,request }) {
 }
 
 export default function Login() {
-    const { currentUser, error } = useLoaderData();
+    const { error } = useLoaderData();
 
     return (
         <div>
@@ -74,13 +72,17 @@ export default function Login() {
                 <div>
                     <p>Please sign in</p>
                 </div>
+                <div>
                 <label>
                     Username: <input type="text" name="username" />
                 </label>
+                </div>
+                <div>
                 <label>
                     Password:{" "}
                     <input type="password" name="password" />
                 </label>
+                </div>
                 <button type="submit">submit</button>
             </form>
         </div>

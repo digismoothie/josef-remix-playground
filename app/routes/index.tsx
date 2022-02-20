@@ -15,7 +15,9 @@ export default function Index() {
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }}>
       <h1>Welcome to Remix</h1>
       <p>{userId}</p>
-      <Link to={``}>Log in</Link> 
+      {
+        userId ? <Link to="/logout">Log out</Link> : <Link to="/login">Log in</Link>
+      }
       <ul>
         <li>
           <a
